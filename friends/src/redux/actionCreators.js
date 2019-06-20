@@ -71,9 +71,10 @@ export const loginFailed = () => {
   }
 }
 
-export const loginSuccess = () => {
+export const loginSuccess = (token) => {
   return {
     type: types.LOGIN_SUCCESS,
+    payload: token
   }
 }
 
@@ -114,7 +115,6 @@ export const loginUser = (credentials, history) => dispatch => {
   dispatch(login())
   axios.post('http://localhost:5000/api/login', credentials)
     .then(res => {
-      localStorage.setItem('token', res.data.payload);
       dispatch(loginSuccess(res.data.payload));
       history.push('/');
       dispatch(fetchFriends())
