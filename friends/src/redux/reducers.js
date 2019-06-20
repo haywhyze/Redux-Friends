@@ -20,13 +20,13 @@ export const friends = (state = initialState, action) => {
       return { ...state, error: action.payload, deletingFriend: false };
     
     case (types.DELETE_FRIEND_SUCCESS):
-      return { friends: state.friends.filter(friend => friend.id !== action.payload), deletingFriend: false};
+      return { ...state, friends: action.payload, deletingFriend: false};
     
     case (types.SAVE_FRIEND):
       return { ...state, savingFriends: true };
 
     case (types.SAVE_FRIEND_SUCCESS):
-      return { ...state, friends: state.friends.concat(action.payload), savingFriends: false };
+      return { ...state, friends: action.payload, savingFriends: false };
 
     case (types.SAVE_FRIEND_FAILURE):
       return { ...state, error: action.payload, savingFriends: false };
@@ -44,7 +44,7 @@ export const friends = (state = initialState, action) => {
       return { ...state, updatingFriend: true };
 
     case (types.UPDATE_FRIEND_SUCCESS):
-      return state;
+      return { ...state, friends: action.payload, updatingFriend: false };
 
     case (types.UPDATE_FRIEND_FAILURE):
       return { ...state, error: action.payload, updatingFriend: false };;
