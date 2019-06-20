@@ -78,7 +78,7 @@ export const loginSuccess = () => {
 
 export const fetchFriends = () => dispatch => {
   dispatch(addFriends())
-  axios.get('http://localhost:5000')
+  axios.get('http://localhost:5000/api/friends')
     .then(res => {
       dispatch(addFriendsSuccess(res.data));
     })
@@ -89,7 +89,7 @@ export const fetchFriends = () => dispatch => {
 
 export const removeFriend = (id) => dispatch => {
   dispatch(deleteFriend())
-  axios.delete('http://localhost:5000', id)
+  axios.delete(`http://localhost:5000/api/friends/${id}`, id)
     .then(res => {
       dispatch(deleteFriendSuccess(res.data));
     })
@@ -100,7 +100,7 @@ export const removeFriend = (id) => dispatch => {
 
 export const addOneFriend = (friend) => dispatch => {
   dispatch(saveFriend())
-  axios.post('http://localhost:5000', friend)
+  axios.post('http://localhost:5000/api/friends', friend)
     .then(res => {
       dispatch(saveFriendSuccess(res.data));
     })
@@ -109,13 +109,17 @@ export const addOneFriend = (friend) => dispatch => {
     });
 };
 
-export const loginUser = (credentials) => dispatch => {
+export const loginUser = (credentials, history) => dispatch => {
   dispatch(login())
-  axios.post('http://localhost:5000', credentials)
+  axios.post('http://localhost:5000/api/login', credentials)
     .then(res => {
-      dispatch(loginSuccess(res.data));
+      localStorage.setItem('token', res.data.payload);
+      dispatch(loginSuccess(res.data.payload));
+      history.push('/');
+      dispatch(fetchFriends())
     })
     .catch(error => {
+      console.log(error)
       dispatch(loginFailed(error.message));
     });
 };

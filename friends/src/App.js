@@ -1,6 +1,6 @@
 import React from 'react';
-import { BrowserRouter, NavLink, Link, Route } from 'react-router-dom';
-import {Login} from './components/Login';
+import { BrowserRouter, NavLink, Route } from 'react-router-dom';
+import Login from './components/Login';
 import Friends from './components/Friends';
 
 function App() {

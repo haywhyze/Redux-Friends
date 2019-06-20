@@ -53,7 +53,7 @@ export const friends = (state = initialState, action) => {
       return { ...state, loggingIn: true };
     
     case (types.LOGIN_SUCCESS):
-      return { ...state, loggedIn: true };
+      return { ...state, loggedIn: true, loggingIn: false };
 
     case (types.LOGIN_FAILURE):
       return { ...state, error: action.payload, loggingIn: false };
