@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, NavLink, Route } from 'react-router-dom';
+import { BrowserRouter, NavLink, Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import Login from './components/Login';
 import Friends from './components/Friends';
@@ -14,6 +14,20 @@ const StyledNavLinks = styled(NavLink)`
 `;
 
 function App() {
+
+  const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      render={props =>
+        localStorage.getItem("userToken") ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to="/login" />
+        )
+      }
+    />
+  );
+
   return (
     <BrowserRouter>
       <div>
@@ -25,7 +39,12 @@ function App() {
           path='/login'
           component={Login}
         />
-        <Friends />
+        
+        <PrivateRoute 
+          exact path="/" 
+          component={Friends} 
+        />
+
       </div>
     </BrowserRouter>
   );
