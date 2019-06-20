@@ -1,4 +1,5 @@
 import axios from 'axios';
+import axiosWithToken from '../axios';
 import * as types from './actionTypes';
 
 export const deleteFriendSuccess = (id) => {
@@ -78,7 +79,7 @@ export const loginSuccess = () => {
 
 export const fetchFriends = () => dispatch => {
   dispatch(addFriends())
-  axios.get('http://localhost:5000/api/friends')
+  axiosWithToken().get('http://localhost:5000/api/friends')
     .then(res => {
       dispatch(addFriendsSuccess(res.data));
     })
@@ -89,7 +90,7 @@ export const fetchFriends = () => dispatch => {
 
 export const removeFriend = (id) => dispatch => {
   dispatch(deleteFriend())
-  axios.delete(`http://localhost:5000/api/friends/${id}`, id)
+  axiosWithToken().delete(`http://localhost:5000/api/friends/${id}`, id)
     .then(res => {
       dispatch(deleteFriendSuccess(res.data));
     })
@@ -100,7 +101,7 @@ export const removeFriend = (id) => dispatch => {
 
 export const addOneFriend = (friend) => dispatch => {
   dispatch(saveFriend())
-  axios.post('http://localhost:5000/api/friends', friend)
+  axiosWithToken().post('http://localhost:5000/api/friends', friend)
     .then(res => {
       dispatch(saveFriendSuccess(res.data));
     })
