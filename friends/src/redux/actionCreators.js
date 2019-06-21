@@ -78,6 +78,12 @@ export const loginSuccess = (token) => {
   }
 }
 
+export const signOut = () => {
+  return {
+    type: types.SIGNOUT,
+  }
+}
+
 export const fetchFriends = () => dispatch => {
   dispatch(addFriends())
   axiosWithToken().get('http://localhost:5000/api/friends')
@@ -124,3 +130,7 @@ export const loginUser = (credentials, history) => dispatch => {
       dispatch(loginFailed(error.message));
     });
 };
+
+export const signOutUser = () => dispatch => {
+  dispatch(signOut());
+}
