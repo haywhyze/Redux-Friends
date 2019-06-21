@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actionCreators";
+import { LoginStyled } from './LoginStyles';
 
 export class Login extends React.Component {
   userRef = React.createRef()
@@ -16,13 +17,15 @@ export class Login extends React.Component {
   render() {
     console.log(this.props);
     return (
-      <div>
-        <h3>Login</h3>
-        <div>username <input type="text" ref={this.userRef} /></div>
-        <div>password <input type="text" ref={this.passRef} /></div>
+      <LoginStyled>
+        <div className='login-container'>
+          <h3>Login</h3>
+          <input type="text" ref={this.userRef} placeholder='Username' />
+          <input type="password" ref={this.passRef} placeholder='Password' />
 
-        <button onClick={this.onLogin}>Log in</button>
-      </div>
+          <button onClick={this.onLogin}>Log in</button>
+        </div>
+      </LoginStyled>
     );
   }
 }
