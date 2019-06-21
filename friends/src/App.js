@@ -3,6 +3,12 @@ import { BrowserRouter, NavLink, Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import Login from './components/Login';
 import Friends from './components/Friends';
+import NewFriendForm from './components/NewFriendForm';
+
+
+const FreindsContainer = styled.div`
+  text-align: center;
+`
 
 const StyledNavLinks = styled(NavLink)`
   padding: 1rem 2rem;
@@ -30,8 +36,9 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div>
+      <FreindsContainer>
         <StyledNavLinks to='/'>Home</StyledNavLinks>
+        <StyledNavLinks to='/add-friend'>Add New Friend</StyledNavLinks>
         <StyledNavLinks to='/login'>Login</StyledNavLinks>
         
         <Route 
@@ -45,7 +52,13 @@ function App() {
           component={Friends} 
         />
 
-      </div>
+        <PrivateRoute
+          exact
+          path='/add-friend'
+          component={NewFriendForm}
+        />
+
+      </FreindsContainer>
     </BrowserRouter>
   );
 }

@@ -100,11 +100,12 @@ export const removeFriend = (id) => dispatch => {
     });
 };
 
-export const addOneFriend = (friend) => dispatch => {
+export const addOneFriend = (friend, history) => dispatch => {
   dispatch(saveFriend())
   axiosWithToken().post('http://localhost:5000/api/friends', friend)
     .then(res => {
       dispatch(saveFriendSuccess(res.data));
+      history.push('/');
     })
     .catch(error => {
       dispatch(saveFriendFailed(error.message));
@@ -117,10 +118,9 @@ export const loginUser = (credentials, history) => dispatch => {
     .then(res => {
       dispatch(loginSuccess(res.data.payload));
       history.push('/');
-      dispatch(fetchFriends())
     })
     .catch(error => {
-      console.log(error)
+      console.log(error.message)
       dispatch(loginFailed(error.message));
     });
 };
