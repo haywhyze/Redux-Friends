@@ -8,7 +8,7 @@ const initialState = {
   loggingIn: false,
   savingFriends: false,
   updatingFriend: false,
-  loggedIn: false,
+  loggedIn: localStorage.getItem('userToken') ? true : false,
   error: null
 };
 export const friends = (state = initialState, action) => {
@@ -57,6 +57,9 @@ export const friends = (state = initialState, action) => {
 
     case (types.LOGIN_FAILURE):
       return { ...state, error: action.payload, loggingIn: false };
+
+    case (types.SIGNOUT):
+      return { ...state, loggedIn: false }
   
     default:
       return state;
