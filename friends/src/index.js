@@ -8,14 +8,14 @@ import { applyMiddleware, createStore, compose } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import rootReducer from "./redux/reducers";
-import { setToken } from './redux/setToken';
+import { setToken, removeToken } from './redux/authMiddleware';
 
 
 const store = createStore(
   rootReducer,
   {},
   compose(
-    applyMiddleware(thunk, logger, setToken),
+    applyMiddleware(thunk, logger, setToken, removeToken),
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
   ),
 );
