@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
+import styled from 'styled-components';
 import { removeFriend, saveFriend, fetchFriends, addOneFriend } from "../redux/actionCreators";
+import Friend from './Friend';
+
+const StyledFriends = styled.div`
+  max-width: 30rem;
+  margin: 0 auto;
+`
 
 export class Friends extends Component {
 
@@ -8,13 +15,18 @@ export class Friends extends Component {
     this.props.fetchFriends();
   }
   render() {
-    const { friends } = this.props;
+    const { friends, removeFriend } = this.props;
     return (
-      <div>
+      <StyledFriends>
         {
-          friends.map(friend => <p key={friend.id}>{friend.name}</p>)
+          friends.map(friend => 
+          <Friend
+            key={friend.id}
+            friend={friend}
+            removeFriend={removeFriend}
+          />)
         }
-      </div>
+      </StyledFriends>
     )
   }
 }
