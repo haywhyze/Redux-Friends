@@ -7,7 +7,8 @@ export class Login extends React.Component {
   userRef = React.createRef()
   passRef = React.createRef()
 
-  onLogin = () => {
+  onLogin = (e) => {
+    e.preventDefault();
     const username = this.userRef.current.value;
     const password = this.passRef.current.value;
 
@@ -15,15 +16,16 @@ export class Login extends React.Component {
   }
 
   render() {
-    console.log(this.props);
     return (
       <LoginStyled>
         <div className='login-container'>
           <h3>Login</h3>
+          <form onSubmit={this.onLogin}>
           <input type="text" ref={this.userRef} placeholder='Username' />
           <input type="password" ref={this.passRef} placeholder='Password' />
 
           <button onClick={this.onLogin}>Log in</button>
+          </form>
         </div>
       </LoginStyled>
     );
@@ -31,7 +33,6 @@ export class Login extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     loggingIn: state.friends.loggingIn,
     loggedIn: state.friends.loggedIn,

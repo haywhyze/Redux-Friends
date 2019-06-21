@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from "react-redux";
 import { BrowserRouter, NavLink, Route, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
+import { signOutUser } from './redux/actionCreators';
 import Login from './components/Login';
 import Friends from './components/Friends';
 import NewFriendForm from './components/NewFriendForm';
@@ -19,48 +21,61 @@ const StyledNavLinks = styled(NavLink)`
   background: rgb(161,21,29);
 `;
 
-function App() {
+export class App extends React.Component {
 
-  const PrivateRoute = ({ component: Component, ...rest }) => (
-    <Route
-      {...rest}
-      render={props =>
-        localStorage.getItem("userToken") ? (
-          <Component {...props} />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
-    />
-  );
+  render() {
+    const PrivateRoute = ({ component: Component, ...rest }) => (
+      <Route
+        {...rest}
+        render={props =>
+          localStorage.getItem("userToken") ? (
+            <Component {...props} />
+          ) : (
+            <Redirect to="/login" />
+          )
+        }
+      />
+    );
 
-  return (
-    <BrowserRouter>
-      <FreindsContainer>
-        <StyledNavLinks to='/'>Home</StyledNavLinks>
-        <StyledNavLinks to='/add-friend'>Add New Friend</StyledNavLinks>
-        <StyledNavLinks to='/login'>Login</StyledNavLinks>
-        
-        <Route 
-          exact
-          path='/login'
-          component={Login}
-        />
-        
-        <PrivateRoute 
-          exact path="/" 
-          component={Friends} 
-        />
+    return (
+      <BrowserRouter>
+        <FreindsContainer>
+          <StyledNavLinks to='/'>Home</StyledNavLinks>
+          {this.props.loggedIn && <StyledNavLinks to='/add-friend'>Add New Friend</StyledNavLinks>}
+          {this.props.loggedIn && <StyledNavLinks onClick={this.props.signOutUser} to='/login'>Logout</StyledNavLinks>}
+          
+          <Route 
+            exact
+            path='/login'
+            component={Login}
+          />
+          
+          <PrivateRoute 
+            exact path="/" 
+            component={Friends} 
+          />
 
-        <PrivateRoute
-          exact
-          path='/add-friend'
-          component={NewFriendForm}
-        />
+          <PrivateRoute
+            exact
+            path='/add-friend'
+            component={NewFriendForm}
+          />
 
-      </FreindsContainer>
-    </BrowserRouter>
-  );
+        </FreindsContainer>
+      </BrowserRouter>
+    );
+  }
+};
+
+const mapStateToProps = (state) => {
+  return {
+    loggedIn: state.friends.loggedIn,
+  };
 }
 
-export default App;
+export default connect(
+  mapStateToProps,
+  {
+    signOutUser
+  }
+)(App);
