@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import styled from 'styled-components';
-import { removeFriend, saveFriend, fetchFriends, addOneFriend } from "../redux/actionCreators";
+import { removeFriend, fetchFriends } from "../redux/actionCreators";
 import Friend from './Friend';
 
 const StyledFriends = styled.div`
@@ -46,8 +46,6 @@ export default connect(
   mapStateToProps,
   {
     removeFriend,
-    saveFriend,
     fetchFriends,
-    addOneFriend
   }
 )(Friends);
